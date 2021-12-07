@@ -13,6 +13,8 @@ const FavoriteList = ({ favorites, onFavorite }) => {
   const handleMouseLeave = () => {
     setHoveredUserId();
   };
+
+  if (!favorites.size) return <div>No favorites yet, start adding some!</div>;
   return (
     <S.FavoriteList>
       {[...favorites].map((favorite) => (

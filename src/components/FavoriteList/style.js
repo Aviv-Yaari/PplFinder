@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const FavoriteList = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   width: 100%;
   padding: 20px;
   gap: 20px;
