@@ -1,17 +1,23 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export const usePeopleFetch = () => {
+export const usePeopleFetch = (countries) => {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    fetchUsers();
-  }, []);
+    fetchUsers(countries);
+  }, [countries]);
 
-  async function fetchUsers() {
+  async function fetchUsers(countries) {
+    const params = new URLSearchParams();
+    params.append("results", 25);
+    params.append("page", 1);
+    countries?.size && params.append("nat", [...countries]);
     setIsLoading(true);
-    const response = await axios.get(`https://randomuser.me/api/?results=25&page=1`);
+    const response = await axios.get(`https://randomuser.me/api`, {
+      params,
+    });
     setIsLoading(false);
     setUsers(response.data.results);
   }

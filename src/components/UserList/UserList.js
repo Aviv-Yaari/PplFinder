@@ -6,7 +6,7 @@ import IconButton from "@material-ui/core/IconButton";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import * as S from "./style";
 
-const UserList = ({ users, isLoading }) => {
+const UserList = ({ users, favorites, isLoading, onCountrySelect, onFavorite }) => {
   const [hoveredUserId, setHoveredUserId] = useState();
 
   const handleMouseEnter = (index) => {
@@ -20,10 +20,11 @@ const UserList = ({ users, isLoading }) => {
   return (
     <S.UserList>
       <S.Filters>
-        <CheckBox value="BR" label="Brazil" />
-        <CheckBox value="AU" label="Australia" />
-        <CheckBox value="CA" label="Canada" />
-        <CheckBox value="DE" label="Germany" />
+        <CheckBox onChange={onCountrySelect} value="BR" label="Brazil" />
+        <CheckBox onChange={onCountrySelect} value="AU" label="Australia" />
+        <CheckBox onChange={onCountrySelect} value="CA" label="Canada" />
+        <CheckBox onChange={onCountrySelect} value="DE" label="Germany" />
+        <CheckBox onChange={onCountrySelect} value="FR" label="France" />
       </S.Filters>
       <S.List>
         {users.map((user, index) => {
@@ -46,8 +47,10 @@ const UserList = ({ users, isLoading }) => {
                   {user?.location.city} {user?.location.country}
                 </Text>
               </S.UserInfo>
-              <S.IconButtonWrapper isVisible={index === hoveredUserId}>
-                <IconButton>
+              <S.IconButtonWrapper
+                isVisible={index === hoveredUserId || favorites.has(user)}
+              >
+                <IconButton onClick={() => onFavorite(user)}>
                   <FavoriteIcon color="error" />
                 </IconButton>
               </S.IconButtonWrapper>
